@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Weather Sample[練習版]</title>
+
+    <style>
+        #view {
+            padding: 10px;
+            border: 10px solid #a00606;
+            background-color: rgb(206, 206, 206);
+            height: 350px;
+            overflow: auto;
+            margin: 5%;
+        }
+
+        img {
+            width: 50px;
+        }
+
+        #view>div {
+            border-bottom: 1px dotted #653be0;
+            font-size: medium;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: x-large;
+            color: #f1071e;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+    <img class="tenki" src="tenki01.png" width="100%" alt="SOUL SISTERSトップ画像"><br>
+
+    <h1>
+        💿🎧機材一覧🎧💿
+    </h1>
+
+    <h3>
+        Technics sl-1200 mark5 2台<br>
+        djm800 <br>
+        XDJ-RX <br>
+        <a href="http://faq.pioneerdj.com/files/img/DRH1295A.pdf" target="_blank">XDJ-RX取扱説明書</a><br>
+        ※CDは使えません。 <br>
+
+    </h3>
+
+    <!-- 天気タイトル -->
+
+    <div>
+        <h1>
+            💿🎧周辺の天気予報🎧💿
+        </h1>
+
+        <div id="view"></div>
+    </div>
+
+    <!-- 天気 -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        //MAP表示処理
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        const key = "388c452aa787433d59fbbd67914e8a8d";  //***自分のKEYを！！！！！！！！！！！！！！！***
+        const lat = "35.647495";   //SOUL SISTERSの緯度
+        const lon = "139.711578";  //SOUL SISTERSの軽度
+        const icon = "http://openweathermap.org/img/wn/"; //ICONにアクセスするURL
+
+
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        //OpenWeatherAPI（天気情報を取得）5DAY/3hour
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        const url = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + key + '&lang=ja';
+        $.ajax({
+            url: url,
+            type: 'get',
+            cache: false,
+            dataType: 'json'
+        }).done(function (data) {
+            console.log(data);
+
+
+            let html = "";
+            for (let i = 0; i < data.list.length; i++) {
+                html += `
+            <div>
+            <div>時刻：${data.list[i].dt_txt}</div>
+            <div>湿度：${data.list[i].main.humidity}%</div>
+            <div>風速：${data.list[i].wind.speed}メートル/秒</div>
+            <div>天気：${data.list[i].weather[0].description}</div>
+            <div>降水確率：${data.list[i].pop * 100}%</div>
+            <div><img src="${icon + data.list[i].weather[0].icon}@2x.png"></div>
+            </div>
+            `;
+            }
+
+
+            $("#view").append(html);
+
+            //$("#area").html(data.city.name)
+        });
+
+
+    </script>
+
+
+
+
+    <!-- アクセスタイトル -->
+
+    <h1>💿🎧アクセス🎧💿</h1>
+
+    <!--アクセス-->
+
+    <main>
+        <iframe class="googleMap"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.197679416806!2d139.70898907578618!3d35.64750097259814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188b6a82a9c33f%3A0x7b642ad7e2e4f17f!2z44K944Km44Or44K344K544K_44O844K6!5e0!3m2!1sja!2sjp!4v1725603603580!5m2!1sja!2sjp"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </main>
+
+    <h3>
+        恵比寿駅より徒歩3分<br>
+        〒150-0013 東京都渋谷区恵比寿１丁目４−５ ホームベースビル<br>
+        03-3442-9477
+
+    </h3>
+
+
+
+    <!-- ビデオタイトル -->
+    <h1>💿🎧店内映像🎧💿</h1>
+
+    <!-- ビデオ -->
+    <video src="./video.mp4" controls></video>
+
+
+
+
+    <!--店舗情報タイトル-->
+    <h1>💿🎧店舗情報🎧💿</h1>
+
+
+
+    <!--店舗情報-->
+    <h3>
+        カウンター席：６<br>
+        ４人掛けテーブル席：３<br>
+        6人掛けソファー席：２<br>
+        共同トイレ：１<br>
+        店内喫煙可<br>
+        <br>
+        ミュージックチャージ￥600-<br>
+        ※出演者はチャージなし<br>
+        <br>
+        お荷物は各自での管理をお願い致します。<br>
+        <br>
+        <br>
+        <br>
+    </h3>
+
+
+
+    <h6>Copyright © 2024 SuZAN OFFICIAL All rights reserved.</h6>
+
+
+
+
+
+
+
+</body>
+
+</html>
